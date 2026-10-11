@@ -1,0 +1,28 @@
+server.port=8080
+
+spring.application.name=diezaster-backend
+
+# Datasource configuration (PostgreSQL)
+# In production, pass these via environment variables or systemd Environment config
+spring.datasource.url=${DB_URL:jdbc:postgresql://localhost:5432/your_database_name}
+spring.datasource.username=${DB_USERNAME:your_db_username}
+spring.datasource.password=${DB_PASSWORD:your_secure_password}
+spring.datasource.driver-class-name=org.postgresql.Driver
+
+# JPA & Hibernate tuning for low-memory VPS
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=false
+spring.jpa.open-in-view=false
+spring.jpa.properties.hibernate.jdbc.batch_size=20
+spring.jpa.properties.hibernate.order_inserts=true
+spring.jpa.properties.hibernate.order_updates=true
+
+# HikariCP Connection Pool (capped low for small RAM footprint)
+spring.datasource.hikari.maximum-pool-size=5
+spring.datasource.hikari.minimum-idle=2
+spring.datasource.hikari.idle-timeout=300000
+spring.datasource.hikari.connection-timeout=20000
+
+# Actuator endpoints
+management.endpoints.web.exposure.include=health,info
+management.endpoint.health.show-details=never

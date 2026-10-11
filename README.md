@@ -27,19 +27,19 @@ Personal portfolio website and engineering showcase for **Adi Hadiansyah** (Back
 ## 📁 Repository Structure
 
 ```text
-├── portfolio/
+├── portfolio/              # Frontend Web Application (Vue 3 + Vite)
 │   ├── public/             # Static assets (favicons, optimized WebP images, downloadable CV)
-│   ├── src/
-│   │   ├── components/     # Vue components (Hero, Work, Career, TechStack, Header)
-│   │   ├── composables/    # Reactive state (theme toggle, viewport reveal observer)
-│   │   ├── data/           # Portfolio data schema (career, projects, skills)
-│   │   ├── App.vue         # Main application layout
-│   │   ├── main.js         # Vue entry point
-│   │   └── style.css       # Design tokens, color system, typography & utilities
+│   ├── src/                # Vue components (Hero, Work, ContactForm, Career, TechStack)
 │   ├── scripts/            # Component verification & interaction checks
-│   ├── package.json        # Dependencies & scripts
-│   └── vite.config.js      # Vite configuration
-└── .gitignore              # Git ignore rules
+│   └── package.json        # Dependencies & scripts
+├── backend/                # Backend API Service (Java 17 + Spring Boot 3 + PostgreSQL)
+│   ├── src/main/java/      # Clean Architecture + Pragmatic CQRS implementation
+│   ├── src/main/resources/ # application.properties (.example template provided)
+│   └── pom.xml             # Maven configuration
+├── infra/                  # VPS Infrastructure & Deployment Templates
+│   ├── nginx/              # Nginx reverse proxy configuration template
+│   └── systemd/            # Systemd service unit template with JVM tuning
+└── .gitignore              # Production-safe Git ignore rules
 ```
 
 ---
@@ -77,3 +77,26 @@ npm run preview
 ```
 
 The production output will be generated inside `portfolio/dist/`.
+
+---
+
+## ☕ Backend Service (Spring Boot 3 + Pragmatic CQRS)
+
+The backend handles inquiry submissions and audit logging with a low-memory footprint:
+
+- **Framework:** Spring Boot 3.4.3 (Java 17)
+- **Architecture:** Pragmatic CQRS (Command Model with validation/XSS sanitization/SHA-256 IP hashing + Query Model with read-only projection)
+- **Database:** PostgreSQL 16
+- **Memory Footprint:** Tuned with JVM `-Xms64m -Xmx256m` and HikariCP maximum 5 connections (~220 MB RAM in production).
+
+### Running Backend Locally
+
+```bash
+cd backend
+# 1. Copy environment template
+cp src/main/resources/application.properties.example src/main/resources/application.properties
+
+# 2. Run with Maven Wrapper
+./mvnw clean compile
+./mvnw spring-boot:run
+```

@@ -27,11 +27,16 @@ Thumbs.db
 .clinerules/
 .github/
 
-# Internal documentation and infra
+# Internal documentation
 docs/
-infra/
 AGENTS.md
 portfolio/README.md
+
+# Real Production Credentials & Service Units (Use *.example files instead)
+infra/systemd/*.service
+infra/nginx/*.conf
+!infra/systemd/*.service.example
+!infra/nginx/*.conf.example
 
 # Backend local build artifacts
 backend/target/

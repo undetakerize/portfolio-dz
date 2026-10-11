@@ -1,0 +1,27 @@
+# Diezaster Portfolio - Linux VPS Systemd Service Template
+# Path on Ubuntu VPS: /etc/systemd/system/diezaster-backend.service
+
+[Unit]
+Description=Diezaster Portfolio Backend Service (Spring Boot 3 + Java 17)
+After=network.target postgresql.service
+Wants=postgresql.service
+
+[Service]
+Type=simple
+User=your_linux_user
+WorkingDirectory=/opt/diezaster-backend
+ExecStart=/usr/bin/java -Xms64m -Xmx256m -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -jar /opt/diezaster-backend/diezaster-backend.jar
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+SuccessExitStatus=143
+
+# Environment Variables (Keep real credentials here on server, never commit them)
+Environment=SPRING_PROFILES_ACTIVE=prod
+Environment=SPRING_DATASOURCE_URL=jdbc:postgresql://127.0.0.1:5432/your_database_name
+Environment=SPRING_DATASOURCE_USERNAME=your_db_username
+Environment=SPRING_DATASOURCE_PASSWORD=your_db_password
+
+[Install]
+WantedBy=multi-user.target
