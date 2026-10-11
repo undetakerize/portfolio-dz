@@ -35,3 +35,7 @@ portfolio/README.md
 
 # Internal offline authoring scripts
 portfolio/scripts/generate-cv.py
+portfolio/scripts/deploy.mjs
+scripts/
+deploy.sh
+deploy.mjs
