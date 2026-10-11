@@ -5,6 +5,7 @@ import SelectedWork from './components/SelectedWork.vue'
 import CareerExperience from './components/CareerExperience.vue'
 import ActionIcon from './components/ActionIcon.vue'
 import TechStack from './components/TechStack.vue'
+import ContactForm from './components/ContactForm.vue'
 import { profile, skillGroups, education } from './data/portfolio.js'
 import { useReveal } from './composables/useReveal.js'
 
@@ -57,6 +58,7 @@ async function copyEmail() {
       <p class="contact-description">Have a project, a question, or an idea to exchange? I’d like to hear it.</p>
       <div class="contact-actions"><a class="email-link" :href="`mailto:${profile.email}`" :aria-label="`Email ${profile.name} at ${profile.email}`">{{ profile.email }} <ActionIcon name="mail" /></a><button class="copy-button mono" type="button" @click="copyEmail">Copy email</button></div>
       <p class="copy-status" role="status">{{ copyStatus }}</p>
+      <ContactForm />
       <a class="text-link" :href="profile.linkedin" target="_blank" rel="noopener noreferrer">Find me on LinkedIn <ActionIcon name="external" /><span class="sr-only"> (opens in a new tab)</span></a>
     </section>
   </main>

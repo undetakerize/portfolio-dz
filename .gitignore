@@ -33,6 +33,13 @@ infra/
 AGENTS.md
 portfolio/README.md
 
+# Backend local build artifacts
+backend/target/
+backend/.mvn/
+backend/mvnw
+backend/mvnw.cmd
+backend/HELP.md
+
 # Internal offline authoring scripts
 portfolio/scripts/generate-cv.py
 portfolio/scripts/deploy.mjs
