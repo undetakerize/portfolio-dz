@@ -1,0 +1,37 @@
+# Credentials and local configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+/secrets/
+/docs/private/
+old-porto/
+
+# Dependencies and generated output
+node_modules/
+dist/
+coverage/
+target/
+*.log
+
+# OS/editor local data
+.DS_Store
+Thumbs.db
+.idea/
+
+# Local agents and tooling
+.brain/
+.clinerules/
+.github/
+
+# Internal documentation and infra
+docs/
+infra/
+AGENTS.md
+portfolio/README.md
+
+# Internal offline authoring scripts
+portfolio/scripts/generate-cv.py

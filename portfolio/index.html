@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f5f3ed" />
+    <script>
+      // Apply the saved/system theme before styles load to avoid a light flash.
+      (() => {
+        let saved
+        try { saved = localStorage.getItem('diezaster-theme') } catch {}
+        const theme = saved === 'light' || saved === 'dark' ? saved : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+        document.documentElement.dataset.theme = theme
+        document.documentElement.style.colorScheme = theme
+        document.querySelector('meta[name="theme-color"]').content = theme === 'dark' ? '#171916' : '#f5f3ed'
+      })()
+    </script>
+    <meta name="description" content="Adi Hadiansyah — Backend Engineer with 4+ years of enterprise experience in Java, Spring Boot, PostgreSQL, Kafka, RESTful APIs, and production troubleshooting." />
+    <meta property="og:title" content="Adi Hadiansyah — Backend Engineer Portfolio" />
+    <meta property="og:description" content="Java and Spring Boot backend engineering. Enterprise APIs, PostgreSQL, event-driven integration, and production reliability." />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="/favicon.svg?v=2" type="image/svg+xml" />
+    <title>Adi Hadiansyah — Backend Engineer Portfolio</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

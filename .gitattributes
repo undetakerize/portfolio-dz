@@ -1,0 +1,2 @@
+# PDF offsets must remain byte-for-byte intact across Windows/Git checkouts.
+*.pdf binary
