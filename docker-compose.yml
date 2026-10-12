@@ -41,27 +41,31 @@ services:
       resources:
         limits:
           memory: 384M
+    ports:
+      - "127.0.0.1:8080:8080"
     networks:
       - internal-net
 
-  proxy:
-    image: nginx:alpine
-    restart: unless-stopped
-    ports:
-      - "${HTTP_PORT:-80}:80"
-      - "${HTTPS_PORT:-443}:443"
-    volumes:
-      - ./infra/docker/nginx.conf:/etc/nginx/conf.d/default.conf:ro
-      - ./portfolio/dist:/var/www/diezaster/current:ro
-      - ./infra/certs:/etc/nginx/certs:ro
-    depends_on:
-      - backend
-    deploy:
-      resources:
-        limits:
-          memory: 64M
-    networks:
-      - internal-net
+  # Optional full containerized proxy.
+  # When using host Nginx (for native Certbot SSL termination), keep proxy disabled/commented out.
+  # proxy:
+  #   image: nginx:alpine
+  #   restart: unless-stopped
+  #   ports:
+  #     - "${HTTP_PORT:-80}:80"
+  #     - "${HTTPS_PORT:-443}:443"
+  #   volumes:
+  #     - ./infra/docker/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+  #     - ./portfolio/dist:/var/www/diezaster/current:ro
+  #     - ./infra/certs:/etc/nginx/certs:ro
+  #   depends_on:
+  #     - backend
+  #   deploy:
+  #     resources:
+  #       limits:
+  #         memory: 64M
+  #   networks:
+  #     - internal-net
 
 volumes:
   pgdata:
