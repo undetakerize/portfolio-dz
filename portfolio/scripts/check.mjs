@@ -35,10 +35,16 @@ try {
   assert(!html.includes('href="#"'), 'No inert placeholder links')
   assert(!html.includes('<iframe'), 'No automatic external Figma embeds')
   assert(html.includes(`mailto:${profile.email}`), 'Email action is a mailto link')
-  for (const entry of changelog) {
+  const defaultVisibleReleases = changelog.slice(0, 3)
+  for (const entry of defaultVisibleReleases) {
     assert(html.includes(entry.version), `Changelog version ${entry.version} renders`)
     assert(html.includes(entry.title.replaceAll('&', '&amp;')), `Changelog title ${entry.title} renders`)
   }
+  for (const entry of changelog.slice(3)) {
+    assert(!html.includes(entry.version), `Archived changelog version ${entry.version} initially hidden in SSR`)
+  }
+  assert(html.includes('changelog-toggle-button'), 'Changelog expand toggle renders')
+  assert(html.includes(`View earlier releases (${changelog.length - 3} archived)`), 'Changelog toggle text reflects archived count')
   assert(html.includes('live-pulse-dot'), 'Live status indicator dot renders')
   assert.equal(projects.length, 2, 'Both source projects are preserved')
   for (const project of projects) {

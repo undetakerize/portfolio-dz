@@ -268,6 +268,13 @@
   .changelog-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
   .changelog-tag { font-size: .65rem; padding: 3px 10px; }
   .changelog-entry.is-live .changelog-tag { background: var(--paper); border-color: var(--rule); }
+  .changelog-entry:nth-child(n+4) { animation: changelog-entry-in .4s cubic-bezier(.2,.7,.2,1) both; animation-delay: var(--reveal-delay, 0ms); }
+  @keyframes changelog-entry-in { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+  .changelog-actions { display: flex; justify-content: flex-start; margin-top: 24px; }
+  .changelog-toggle-button { display: inline-flex; align-items: center; gap: 10px; background: transparent; border: 1px solid var(--rule); min-height: 42px; padding: 10px 16px; font: .68rem var(--mono); color: var(--ink); letter-spacing: .02em; cursor: pointer; transition: border-color .2s, color .2s, background-color .2s; }
+  .changelog-toggle-button:hover { border-color: var(--accent); color: var(--accent); }
+  .changelog-toggle-button .action-icon { transition: transform .3s; }
+  .changelog-toggle-button[aria-expanded='true'] .action-icon { transform: rotate(180deg); }
 
   .site-header, .about-section, .portrait-stamp, .project-dialog { transition: background-color .25s, border-color .25s, color .25s; }
   [data-reveal] { opacity: 1; transform: translateY(0); transition: opacity .65s cubic-bezier(.2,.7,.2,1), transform .65s cubic-bezier(.2,.7,.2,1); transition-delay: var(--reveal-delay, 0ms); }
@@ -361,7 +368,7 @@
     .work-filters button { min-height: 44px; }
     .theme-toggle { min-width: 44px; min-height: 44px; }
     .dialog-close { min-height: 44px; }
-    .copy-button, .project-title, .site-footer > a.mono { min-height: 44px; }
+    .copy-button, .project-title, .site-footer > a.mono, .changelog-toggle-button { min-height: 44px; }
     .about-heading h2 { margin-top: 25px; }
     .about-note { margin-top: 22px; }
     .about-copy > .about-lead { font-size: 1.3rem; }
@@ -372,6 +379,7 @@
     .changelog-body { padding-left: 20px; }
     .changelog-title { font-size: 1.05rem; }
     .changelog-description { font-size: .84rem; }
+    .changelog-toggle-button { width: 100%; justify-content: center; }
     .contact-actions { gap: 18px; }
     .contact-section h2 { font-size: clamp(2.4rem, 8.7vw, 3.6rem); }
     .site-footer { flex-wrap: wrap; padding-block: 24px; gap: 20px 10px; }

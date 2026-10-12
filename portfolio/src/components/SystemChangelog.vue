@@ -1,5 +1,12 @@
 <script setup>
+import { ref, computed } from 'vue'
+import ActionIcon from './ActionIcon.vue'
 import { changelog } from '../data/changelog.js'
+
+const expanded = ref(false)
+const DEFAULT_VISIBLE = 3
+
+const visibleReleases = computed(() => (expanded.value ? changelog : changelog.slice(0, DEFAULT_VISIBLE)))
 </script>
 
 <template>
@@ -14,12 +21,12 @@ import { changelog } from '../data/changelog.js'
     </div>
     <div class="changelog-list" role="list">
       <article
-        v-for="(release, index) in changelog"
+        v-for="(release, index) in visibleReleases"
         :key="release.version"
         class="changelog-entry"
         :class="{ 'is-live': release.status === 'live' }"
         data-reveal
-        :style="{ '--reveal-delay': `${index * 60}ms` }"
+        :style="{ '--reveal-delay': `${(index >= DEFAULT_VISIBLE ? index - DEFAULT_VISIBLE : index) * 60}ms` }"
         role="listitem"
       >
         <div class="changelog-meta mono">
@@ -49,6 +56,17 @@ import { changelog } from '../data/changelog.js'
           </div>
         </div>
       </article>
+    </div>
+    <div v-if="changelog.length > DEFAULT_VISIBLE" class="changelog-actions">
+      <button
+        type="button"
+        class="changelog-toggle-button"
+        :aria-expanded="expanded"
+        @click="expanded = !expanded"
+      >
+        <span>{{ expanded ? 'Hide earlier releases' : `View earlier releases (${changelog.length - DEFAULT_VISIBLE} archived)` }}</span>
+        <ActionIcon name="down" />
+      </button>
     </div>
   </section>
 </template>
