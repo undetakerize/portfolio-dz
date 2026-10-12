@@ -30,7 +30,7 @@ async function copyEmail() {
     <section id="home" class="hero shell" aria-labelledby="hero-heading">
       <div class="hero-type-layer" aria-hidden="true"><span>BACKEND</span><span>ENGINEER</span></div>
       <div class="hero-copy" data-reveal>
-        <p class="eyebrow hero-kicker"><span class="accent-line" aria-hidden="true"></span>JAVA / BACKEND ENGINEER</p>
+        <p class="eyebrow hero-kicker"><span class="pill-badge pill-badge-forest hero-kicker-pill"><ActionIcon name="sparkle" :fill="true" class="kicker-sparkle" /> JAVA / BACKEND ENGINEER</span></p>
         <h1 id="hero-heading">Adi<br />Hadiansyah<span class="name-dot">.</span></h1>
         <p class="hero-description">Reliable services.<br /><em>Practical backend solutions.</em></p>
         <p class="hero-intro">{{ profile.summary }}</p>
@@ -38,7 +38,11 @@ async function copyEmail() {
         <div class="hero-resume"><a class="resume-link" href="/cv/Adi_Hadiansyah_Backend_Engineer.pdf" download>Download backend CV <span class="mono">PDF</span><ActionIcon name="download" /></a></div>
       </div>
       <figure class="hero-portrait" data-reveal style="--reveal-delay: 100ms">
-        <div class="portrait-frame"><div class="portrait-image"><img src="/images/adi-9489-optimized.webp" alt="Adi Hadiansyah wearing glasses beside a bicycle at a lakeside park" width="1200" height="1562" fetchpriority="high" /></div><span class="portrait-stamp mono">JAVA / SPRING BOOT<br />BACKEND ENGINEERING</span></div>
+        <div class="portrait-frame">
+          <div class="portrait-image"><img src="/images/adi-9489-optimized.webp" alt="Adi Hadiansyah wearing glasses beside a bicycle at a lakeside park" width="1200" height="1562" fetchpriority="high" /></div>
+          <span class="portrait-badge pill-badge pill-badge-ochre"><ActionIcon name="sparkle" :fill="true" class="badge-sparkle" /> AVAILABLE FOR ROLES</span>
+          <span class="portrait-stamp mono">JAVA / SPRING BOOT<br />BACKEND ENGINEERING</span>
+        </div>
         <figcaption><span class="mono">ADI HADIANSYAH</span><span>{{ profile.location }}</span></figcaption>
       </figure>
       <div class="hero-bottom mono"><span>JAVA · SPRING BOOT · POSTGRESQL · KAFKA</span><a href="#experience">SCROLL TO EXPLORE <ActionIcon name="down" /></a></div>

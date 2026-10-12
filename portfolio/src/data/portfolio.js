@@ -24,6 +24,7 @@ export const experience = [
       'Validated changes with functional smoke tests and mock-based unit tests; investigated service, integration, and data issues in production.',
       'Worked with QA, frontend developers, business analysts, and users from requirement analysis through testing, deployment support, and post-release troubleshooting in Agile/Scrum teams.',
     ],
+    tags: ['#Java', '#SpringBoot', '#PostgreSQL', '#REST-APIs'],
   },
   {
     company: 'PT. Digital Amore Kriyanesia',

@@ -1,5 +1,8 @@
 <script setup>
-defineProps({ name: { type: String, required: true } })
+defineProps({
+  name: { type: String, required: true },
+  fill: { type: Boolean, default: false }
+})
 
 const paths = {
   external: 'M15 3h6v6m0-6L11 13M10 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5',
@@ -8,9 +11,10 @@ const paths = {
   down: 'm6 9 6 6 6-6',
   up: 'm6 15 6-6 6 6',
   details: 'M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V8l-5-5Zm0 0v5h5M8 12h7M8 16h7',
+  sparkle: 'M12 2c0 5.5-4.5 10-10 10 5.5 0 10 4.5 10 10 0-5.5 4.5-10 10-10-5.5 0-10-4.5-10-10Z',
 }
 </script>
 
 <template>
-  <svg class="action-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path :d="paths[name]" /></svg>
+  <svg class="action-icon" width="18" height="18" viewBox="0 0 24 24" :fill="fill ? 'currentColor' : 'none'" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path :d="paths[name]" /></svg>
 </template>
