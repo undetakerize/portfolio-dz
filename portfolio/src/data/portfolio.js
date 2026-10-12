@@ -32,7 +32,13 @@ export const experience = [
     period: 'Jul 2021 – Oct 2021',
     start: '2021-07',
     end: '2021-10',
-    summary: 'Earlier experience in requirements gathering, user research, usability testing, design iteration, and stakeholder presentations.',
+    summary: 'Earlier design foundation before transitioning fully into backend engineering. Led web interface redesigns and digital assets for client platforms.',
+    highlights: [
+      'Redesigned a client financial web portal, transforming legacy structures into clean information architecture, intuitive user flows, and responsive layouts.',
+      'Audited legacy web pages, resolved mobile responsiveness bottlenecks, and crafted interactive high-fidelity prototypes in Figma across savings, deposit, and loan services.',
+      'Created digital graphic assets and iterative UI specifications presented directly to stakeholders and product teams.',
+    ],
+    tags: ['#Figma', '#UI/UX', '#DesignSystems', '#Wireframing'],
   },
 ]
 
@@ -60,14 +66,13 @@ export const techStack = [
   { name: 'NestJS', icon: 'nestjs-original.svg' },
   { name: 'C#', icon: 'csharp-original.svg' },
   { name: '.NET Core', icon: 'dotnetcore-original.svg' },
-  { name: 'MySQL', icon: 'mysql-original-wordmark.svg' },
-  { name: 'CodeIgniter', icon: 'codeigniter-plain-wordmark.svg' },
 ]
 
 export const tools = [
   { name: 'IntelliJ IDEA', icon: 'intellij-original.svg' },
   { name: 'DBeaver', icon: 'dbeaver-original.svg' },
   { name: 'Insomnia', icon: 'insomnia-original.svg' },
+  { name: 'Figma', icon: 'figma-original.svg' },
 ]
 
 export const projects = [

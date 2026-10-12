@@ -141,8 +141,8 @@
   .career-highlights { padding-left: 18px; margin: 22px 0 0; color: var(--muted); font-size: .875rem; }
   .career-highlights li { padding-left: 5px; margin-top: 12px; }
   .career-highlights li::marker { color: var(--accent); }
-  .career-entry-secondary .career-content h3 { font-size: 1.1rem; }
-  .career-entry-secondary .career-summary { font-size: .85rem; }
+  .career-entry-secondary .career-content h3 { font-size: clamp(1.25rem, 2vw, 1.45rem); }
+  .career-entry-secondary .career-summary { font-size: .9rem; }
   .education-list { margin-top: 35px; }
   .education-list > div { margin-top: 20px; }
   .education-list h4 { margin: 0; font-size: .85rem; font-weight: 600; }
