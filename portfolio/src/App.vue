@@ -5,6 +5,7 @@ import SelectedWork from './components/SelectedWork.vue'
 import CareerExperience from './components/CareerExperience.vue'
 import ActionIcon from './components/ActionIcon.vue'
 import TechStack from './components/TechStack.vue'
+import SystemChangelog from './components/SystemChangelog.vue'
 import ContactForm from './components/ContactForm.vue'
 import { profile, skillGroups, education } from './data/portfolio.js'
 import { useReveal } from './composables/useReveal.js'
@@ -55,9 +56,10 @@ async function copyEmail() {
       </div>
     </section>
     <TechStack />
+    <SystemChangelog />
     <SelectedWork />
     <section id="contact" class="contact-section section shell" aria-labelledby="contact-heading" data-reveal>
-      <div class="section-topline"><p class="eyebrow">04 / LET’S CONNECT</p></div>
+      <div class="section-topline"><p class="eyebrow">05 / LET’S CONNECT</p></div>
       <h2 id="contact-heading">Good things start<br />with a conversation.</h2>
       <p class="contact-description">Have a project, a question, or an idea to exchange? I’d like to hear it.</p>
       <div class="contact-actions"><a class="email-link" :href="`mailto:${profile.email}`" :aria-label="`Email ${profile.name} at ${profile.email}`">{{ profile.email }} <ActionIcon name="mail" /></a><button class="copy-button mono" type="button" @click="copyEmail">Copy email</button></div>

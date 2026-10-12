@@ -5,6 +5,7 @@ import { createServer } from 'vite'
 import { renderToString } from '@vue/server-renderer'
 import { createSSRApp } from 'vue'
 import { projects, profile, experience, skillGroups, education } from '../src/data/portfolio.js'
+import { changelog } from '../src/data/changelog.js'
 
 const root = fileURLToPath(new URL('../', import.meta.url))
 const server = await createServer({ root, server: { middlewareMode: true }, appType: 'custom' })
@@ -34,6 +35,11 @@ try {
   assert(!html.includes('href="#"'), 'No inert placeholder links')
   assert(!html.includes('<iframe'), 'No automatic external Figma embeds')
   assert(html.includes(`mailto:${profile.email}`), 'Email action is a mailto link')
+  for (const entry of changelog) {
+    assert(html.includes(entry.version), `Changelog version ${entry.version} renders`)
+    assert(html.includes(entry.title.replaceAll('&', '&amp;')), `Changelog title ${entry.title} renders`)
+  }
+  assert(html.includes('live-pulse-dot'), 'Live status indicator dot renders')
   assert.equal(projects.length, 2, 'Both source projects are preserved')
   for (const project of projects) {
     assert(html.includes(project.name), `${project.name} renders`)
