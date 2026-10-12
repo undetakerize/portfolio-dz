@@ -130,7 +130,6 @@
   .career-entry-highlight .career-summary { color: var(--ochre-card-ink); opacity: .88; }
   .career-entry-highlight .career-highlights { color: var(--ochre-card-ink); opacity: .92; }
   .career-entry-highlight .career-highlights li::marker { color: var(--accent); }
-  .career-category-lead { color: var(--accent); font-weight: 600; letter-spacing: .09em; }
   .career-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
   .career-entry-highlight .career-tags .pill-badge { background: rgb(255 255 255 / .35); border-color: rgb(0 0 0 / .12); color: var(--ochre-card-ink); }
   :root[data-theme='dark'] .career-entry-highlight .career-tags .pill-badge { background: rgb(0 0 0 / .25); border-color: rgb(255 255 255 / .12); color: var(--ochre-card-ink); }

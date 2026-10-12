@@ -25,9 +25,7 @@ import ActionIcon from './ActionIcon.vue'
               <time :datetime="job.start">{{ job.period.split(' – ')[0] }}</time> – <time :datetime="job.end">{{ job.period.split(' – ')[1] }}</time>
             </span>
           </p>
-          <p class="eyebrow" :class="index === 0 ? 'career-category-lead' : 'muted'">
-            {{ index === 0 ? 'CORE BACKEND ENGINEERING' : 'EARLIER EXPERIENCE' }}
-          </p>
+          <p class="eyebrow muted">{{ job.role.toUpperCase() }}</p>
         </div>
         <div class="career-content">
           <h3>{{ job.role }}</h3>
