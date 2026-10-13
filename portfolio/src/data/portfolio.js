@@ -32,13 +32,12 @@ export const experience = [
     period: 'Jul 2021 – Oct 2021',
     start: '2021-07',
     end: '2021-10',
-    summary: 'Earlier design foundation before transitioning fully into backend engineering. Led web interface redesigns and digital assets for client platforms.',
+    summary: 'Design foundation before transitioning into enterprise backend engineering.',
     highlights: [
-      'Redesigned a client financial web portal, transforming legacy structures into clean information architecture, intuitive user flows, and responsive layouts.',
-      'Audited legacy web pages, resolved mobile responsiveness bottlenecks, and crafted interactive high-fidelity prototypes in Figma across savings, deposit, and loan services.',
-      'Created digital graphic assets and iterative UI specifications presented directly to stakeholders and product teams.',
+      'Collaborated with cross-functional teams to gather requirements, user feedback, and product constraints for web and mobile interfaces.',
+      'Conducted user research, usability testing, and crafted interactive design prototypes in Figma presented directly to stakeholders.',
     ],
-    tags: ['#Figma', '#UI/UX', '#DesignSystems', '#Wireframing'],
+    tags: ['#Figma', '#UI/UX', '#UserResearch', '#Wireframing'],
   },
 ]
 
