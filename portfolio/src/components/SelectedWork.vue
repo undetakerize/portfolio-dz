@@ -1,5 +1,5 @@
 <script setup>
-import { computed, nextTick, onBeforeUnmount, ref } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
 import { projects } from '../data/portfolio.js'
 import { changelog } from '../data/changelog.js'
 import ActionIcon from './ActionIcon.vue'
@@ -18,22 +18,57 @@ const dialog = ref(null)
 let trigger = null
 let previousOverflow = ''
 
+const currentIndex = computed(() => {
+  if (!selected.value) return -1
+  return filteredProjects.value.findIndex(p => p.id === selected.value.id)
+})
+
+const hasPrev = computed(() => currentIndex.value > 0)
+const hasNext = computed(() => currentIndex.value >= 0 && currentIndex.value < filteredProjects.value.length - 1)
+
+function navigateProject(direction) {
+  const newIndex = currentIndex.value + direction
+  if (newIndex >= 0 && newIndex < filteredProjects.value.length) {
+    selected.value = filteredProjects.value[newIndex]
+    if (dialog.value) dialog.value.scrollTop = 0
+  }
+}
+
+function handleKeydown(event) {
+  if (!dialog.value?.open) return
+  if (event.key === 'ArrowUp' || event.key === 'ArrowLeft') {
+    if (hasPrev.value) {
+      event.preventDefault()
+      navigateProject(-1)
+    }
+  } else if (event.key === 'ArrowDown' || event.key === 'ArrowRight') {
+    if (hasNext.value) {
+      event.preventDefault()
+      navigateProject(1)
+    }
+  }
+}
+
 async function showProject(project, event) {
-  trigger = event.currentTarget
+  if (event?.currentTarget) trigger = event.currentTarget
   selected.value = project
   await nextTick()
-  previousOverflow = document.body.style.overflow
-  dialog.value.showModal()
-  document.body.style.overflow = 'hidden'
+  if (typeof document !== 'undefined') {
+    previousOverflow = document.body.style.overflow
+    dialog.value?.showModal()
+    document.body.style.overflow = 'hidden'
+  }
 }
 
 function restoreFocus() {
-  document.body.style.overflow = previousOverflow
+  if (typeof document !== 'undefined') {
+    document.body.style.overflow = previousOverflow
+  }
   trigger?.focus()
 }
 
 function closeDialog() {
-  dialog.value.close()
+  dialog.value?.close()
 }
 
 function closeOnBackdrop(event) {
@@ -42,8 +77,19 @@ function closeOnBackdrop(event) {
   if (event.clientX < box.left || event.clientX > box.right || event.clientY < box.top || event.clientY > box.bottom) closeDialog()
 }
 
+onMounted(() => {
+  if (typeof window !== 'undefined') {
+    window.addEventListener('keydown', handleKeydown)
+  }
+})
+
 onBeforeUnmount(() => {
-  if (dialog.value?.open) document.body.style.overflow = previousOverflow
+  if (typeof window !== 'undefined') {
+    window.removeEventListener('keydown', handleKeydown)
+  }
+  if (dialog.value?.open && typeof document !== 'undefined') {
+    document.body.style.overflow = previousOverflow
+  }
 })
 </script>
 
@@ -69,48 +115,130 @@ onBeforeUnmount(() => {
       <span class="work-count mono">{{ String(filteredProjects.length).padStart(2, '0') }} PROJECTS</span>
     </div>
 
-    <div class="project-grid">
+    <div class="project-grid event-grid">
       <article
         v-for="(project, index) in filteredProjects"
         :key="project.id"
-        class="project"
-        :class="{ 'project-featured': project.id === 'diezaster-infra' }"
+        class="project event-card"
+        :class="{ 'project-live': project.id === 'diezaster-infra' }"
         :style="{ '--item-delay': `${index * 75}ms` }"
       >
-        <button class="project-image-button" type="button" :aria-label="`Read about ${project.name}`" @click="showProject(project, $event)">
-          <img :src="project.image" :alt="project.alt" width="1200" height="627" loading="lazy" />
-          <span class="image-action" aria-hidden="true">View details <ActionIcon name="details" /></span>
+        <button class="project-image-button event-banner-button" type="button" :aria-label="`Read about ${project.name}`" @click="showProject(project, $event)">
+          <div class="event-banner-media">
+            <img :src="project.image" :alt="project.alt" width="1200" height="675" loading="lazy" />
+            <div class="event-overlay-badges">
+              <span v-if="project.badge" class="pill-badge" :class="project.id === 'diezaster-infra' ? 'pill-badge-forest event-live-pill' : 'pill-badge-muted'">
+                <span v-if="project.id === 'diezaster-infra'" class="live-pulse-dot" aria-hidden="true"></span>
+                {{ project.badge }}
+              </span>
+              <span v-if="project.stamp" class="event-stamp-tag mono">{{ project.stamp }}</span>
+            </div>
+            <span class="image-action" aria-hidden="true">View details <ActionIcon name="details" /></span>
+          </div>
         </button>
-        <div class="project-meta mono">
-          <span>{{ project.category }}</span>
-          <span>{{ project.year }} / {{ project.number }}</span>
+        <div class="event-card-body">
+          <div class="project-meta mono">
+            <span class="event-category-label">{{ project.category }}</span>
+            <span class="event-timestamp">{{ project.year }} / {{ project.number }}</span>
+          </div>
+          <button class="project-title" type="button" @click="showProject(project, $event)">
+            <span>{{ project.name }}</span>
+            <span class="project-detail-label">View details <ActionIcon name="details" /></span>
+          </button>
+          <p class="project-summary">{{ project.summary }}</p>
+          <ul class="project-tags" aria-label="Project technologies">
+            <li v-for="tag in project.tags" :key="tag">{{ tag }}</li>
+          </ul>
         </div>
-        <button class="project-title" type="button" @click="showProject(project, $event)">
-          {{ project.name }}
-          <span class="project-detail-label">View details <ActionIcon name="details" /></span>
-        </button>
-        <p class="project-summary">{{ project.summary }}</p>
-        <ul class="project-tags" aria-label="Project technologies">
-          <li v-for="tag in project.tags" :key="tag">{{ tag }}</li>
-        </ul>
       </article>
     </div>
 
-    <dialog ref="dialog" class="project-dialog" aria-labelledby="project-dialog-title" @close="restoreFocus" @click="closeOnBackdrop">
+    <dialog ref="dialog" class="project-dialog steam-news-modal" aria-labelledby="project-dialog-title" @close="restoreFocus" @click="closeOnBackdrop">
       <template v-if="selected">
-        <div class="dialog-top">
-          <span class="eyebrow">PROJECT {{ selected.number }} / {{ selected.year }}</span>
-          <button autofocus type="button" class="dialog-close" aria-label="Close project details" @click="closeDialog">
-            Close <span aria-hidden="true">×</span>
+        <div class="dialog-floating-controls" role="toolbar" aria-label="Announcement navigation">
+          <button
+            type="button"
+            class="modal-circle-btn modal-prev-btn"
+            aria-label="Previous announcement"
+            :disabled="!hasPrev"
+            @click="navigateProject(-1)"
+          >
+            <span aria-hidden="true">▲</span>
+          </button>
+          <button
+            type="button"
+            class="modal-circle-btn modal-next-btn"
+            aria-label="Next announcement"
+            :disabled="!hasNext"
+            @click="navigateProject(1)"
+          >
+            <span aria-hidden="true">▼</span>
+          </button>
+          <button
+            autofocus
+            type="button"
+            class="modal-circle-btn dialog-close"
+            aria-label="Close project details"
+            @click="closeDialog"
+          >
+            <span aria-hidden="true">×</span>
           </button>
         </div>
-        <img :src="selected.image" :alt="selected.alt" width="1200" height="627" />
+
+        <div class="dialog-banner-wrap">
+          <img :src="selected.image" :alt="selected.alt" width="1200" height="675" class="dialog-banner-img" />
+          <div class="dialog-banner-gradient" aria-hidden="true"></div>
+        </div>
+
         <div class="dialog-content">
+          <div class="news-meta-row">
+            <span class="pill-badge pill-badge-ochre">{{ selected.eventCategory || 'UPDATE / MILESTONE' }}</span>
+            <time class="news-post-date mono">POSTED {{ selected.eventDate || selected.year }} · ADI HADIANSYAH</time>
+          </div>
+
           <p class="eyebrow">{{ selected.role }}</p>
-          <h2 id="project-dialog-title">{{ selected.name }}</h2>
-          <p>{{ selected.description }}</p>
-          <h3>The result</h3>
-          <p>{{ selected.outcome }}</p>
+          <h2 id="project-dialog-title" class="news-modal-title">{{ selected.name }}</h2>
+
+          <!-- Engaging Fun Fact & Dev Notes for Project 01 -->
+          <div v-if="selected.id === 'diezaster-infra'" class="news-callout fun-fact-box">
+            <div class="fun-fact-top">
+              <span class="pill-badge pill-badge-forest">
+                <span class="live-pulse-dot" aria-hidden="true"></span>
+                FUN FACT &amp; DEV NOTES
+              </span>
+              <span class="mono muted fun-fact-specs">2GB RAM VPS · LEAN JRE</span>
+            </div>
+            <h3 class="fun-fact-lead">
+              Fun fact: this website is self-hosted on a 2GB VPS.
+            </h3>
+            <p class="fun-fact-intro">
+              Yes, this entire portfolio and live backend aren't running on a serverless free tier—they are self-hosted on a single 2GB RAM Linux VPS. Running enterprise Java 17 and Spring Boot 3 on tight memory constraints was an intentional engineering challenge to prove low-footprint cloud reliability.
+            </p>
+            <div class="fun-fact-grid">
+              <div class="fun-fact-cell">
+                <span class="cell-label mono">01 / The 2GB VPS Challenge</span>
+                <p>Strict memory quotas protect host stability without swap thrashing. Total application stack operates with &gt;1.2GB safety headroom.</p>
+              </div>
+              <div class="fun-fact-cell">
+                <span class="cell-label mono">02 / Spring Boot 3 &amp; CQRS</span>
+                <p>Pragmatic CQRS pattern isolating write mutations with strict validation, XSS sanitization, and SHA-256 IP hashing from high-speed read queries.</p>
+              </div>
+              <div class="fun-fact-cell">
+                <span class="cell-label mono">03 / G1GC &amp; HikariCP Tuning</span>
+                <p>JVM Heap hard-capped under 384MB with active G1GC garbage reclamation and a lean 5-connection pool preventing memory sprawl.</p>
+              </div>
+              <div class="fun-fact-cell">
+                <span class="cell-label mono">04 / Docker Alpine Stack</span>
+                <p>Eclipse Temurin JRE multi-stage build paired with PostgreSQL 16 Alpine on an internal container bridge network with 640MB total active budget.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="news-body-section">
+            <p class="project-description-text">{{ selected.description }}</p>
+            <h3>The result</h3>
+            <p class="project-outcome-text">{{ selected.outcome }}</p>
+          </div>
 
           <div v-if="selected.id === 'diezaster-infra'" class="project-milestones">
             <h3>Engineering Milestones (M1–M10)</h3>

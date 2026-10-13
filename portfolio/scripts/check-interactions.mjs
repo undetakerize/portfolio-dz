@@ -95,6 +95,42 @@ try {
   await nextTick()
   assert.equal(document.querySelectorAll('.project').length, 3, 'All 3 projects visible again')
 
+  // Verify Steam News Hub modal previous/next navigation
+  const firstTrigger = document.querySelector('.project-title')
+  firstTrigger.click()
+  await nextTick()
+  await nextTick()
+  assert(dialog.open, 'Dialog opened for Steam News modal navigation check')
+  assert(dialog.textContent.includes('Cloud Infrastructure & Backend Playground'), 'Project 01 displayed initially')
+  assert(dialog.textContent.includes('Fun fact: this website is self-hosted'), 'Fun Fact section rendered in modal')
+  
+  const prevBtn = dialog.querySelector('.modal-prev-btn')
+  const nextBtn = dialog.querySelector('.modal-next-btn')
+  assert(prevBtn, 'Previous announcement button exists')
+  assert(nextBtn, 'Next announcement button exists')
+  assert(prevBtn.disabled, 'Previous button disabled at first project')
+  assert(!nextBtn.disabled, 'Next button enabled at first project')
+
+  nextBtn.click()
+  await nextTick()
+  assert(dialog.textContent.includes('Bankaing'), 'Navigated to Project 02 (Bankaing)')
+  assert(!prevBtn.disabled, 'Previous button enabled at Project 02')
+  assert(!nextBtn.disabled, 'Next button enabled at Project 02')
+
+  nextBtn.click()
+  await nextTick()
+  assert(dialog.textContent.includes('Atarashii Gakko!'), 'Navigated to Project 03 (Atarashii Gakko!)')
+  assert(!prevBtn.disabled, 'Previous button enabled at Project 03')
+  assert(nextBtn.disabled, 'Next button disabled at last project')
+
+  prevBtn.click()
+  await nextTick()
+  assert(dialog.textContent.includes('Bankaing'), 'Navigated back to Project 02 (Bankaing)')
+
+  dialog.querySelector('.dialog-close').click()
+  await nextTick()
+  assert(!dialog.open, 'Dialog closes from navigation check')
+
   Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText: async () => { throw new Error('clipboard unavailable') } } })
   document.querySelector('.copy-button').click()
   await new Promise(resolve => setTimeout(resolve, 0))

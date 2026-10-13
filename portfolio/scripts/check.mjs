@@ -40,6 +40,8 @@ try {
   assert(infraProject, 'Cloud infrastructure project is present')
   assert.equal(infraProject.year, '2026', 'Infrastructure project has year 2026')
   assert(html.includes(infraProject.name.replaceAll('&', '&amp;')), 'Infrastructure project renders in SSR')
+  assert(html.includes('Fun Fact: Yes, this entire portfolio is self-hosted'), 'Fun fact summary renders in SSR')
+  assert(html.includes('LIVE UPDATE · OCT 2026'), 'Live update event badge renders in SSR')
   for (const link of infraProject.links) {
     assert(link.url.startsWith('https://'), `Project link ${link.url} uses https:`)
   }
