@@ -191,8 +191,7 @@ onBeforeUnmount(() => {
           <div class="event-banner-media">
             <img :src="project.image" :alt="project.alt" width="1200" height="675" loading="lazy" />
             <div class="event-overlay-badges">
-              <span v-if="project.badge" class="pill-badge" :class="project.id === 'diezaster-infra' ? 'pill-badge-forest event-live-pill' : 'pill-badge-muted'">
-                <span v-if="project.id === 'diezaster-infra'" class="live-pulse-dot" aria-hidden="true"></span>
+              <span v-if="project.badge" class="pill-badge pill-badge-muted">
                 {{ project.badge }}
               </span>
               <span v-if="project.stamp" class="event-stamp-tag mono">{{ project.stamp }}</span>
