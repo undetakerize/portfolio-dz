@@ -35,7 +35,7 @@ try {
   assert(!html.includes('href="#"'), 'No inert placeholder links')
   assert(!html.includes('<iframe'), 'No automatic external Figma embeds')
   assert(html.includes(`mailto:${profile.email}`), 'Email action is a mailto link')
-  assert.equal(projects.length, 3, 'All 3 showcase projects are preserved')
+  assert.equal(projects.length, 4, 'All 4 showcase projects are preserved')
   const infraProject = projects.find(p => p.id === 'diezaster-infra')
   assert(infraProject, 'Cloud infrastructure project is present')
   assert.equal(infraProject.year, '2026', 'Infrastructure project has year 2026')

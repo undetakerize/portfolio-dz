@@ -60,7 +60,7 @@ try {
   assert.equal(menu.getAttribute('aria-expanded'), 'false', 'Navigation closes menu')
 
   const filters = [...document.querySelectorAll('.work-filters button')]
-  assert.equal(document.querySelectorAll('.project').length, 3, 'All 3 projects visible initially')
+  assert.equal(document.querySelectorAll('.project').length, 4, 'All 4 projects visible initially')
 
   const backendFilter = filters.find(button => button.textContent === 'Backend & DevOps')
   assert(backendFilter, 'Backend & DevOps filter exists')
@@ -95,9 +95,9 @@ try {
 
   filters.find(button => button.textContent === 'All work').click()
   await nextTick()
-  assert.equal(document.querySelectorAll('.project').length, 3, 'All 3 projects visible again')
+  assert.equal(document.querySelectorAll('.project').length, 4, 'All 4 projects visible again')
 
-  // Verify Steam News Hub modal previous/next navigation
+  // Verify Steam News Hub modal previous/next navigation across all 4 projects
   const firstTrigger = document.querySelector('.project-title')
   firstTrigger.click()
   await nextTick()
@@ -121,13 +121,19 @@ try {
 
   nextBtn.click()
   await nextTick()
-  assert(dialog.textContent.includes('Atarashii Gakko!'), 'Navigated to Project 03 (Atarashii Gakko!)')
+  assert(dialog.textContent.includes('Bankaing'), 'Navigated to Project 03 (Bankaing)')
   assert(!prevBtn.disabled, 'Previous button enabled at Project 03')
+  assert(!nextBtn.disabled, 'Next button enabled at Project 03')
+
+  nextBtn.click()
+  await nextTick()
+  assert(dialog.textContent.includes('Atarashii Gakko!'), 'Navigated to Project 04 (Atarashii Gakko!)')
+  assert(!prevBtn.disabled, 'Previous button enabled at Project 04')
   assert(nextBtn.disabled, 'Next button disabled at last project')
 
   prevBtn.click()
   await nextTick()
-  assert(dialog.textContent.includes('Financial Ledger'), 'Navigated back to Project 02 (Financial Ledger)')
+  assert(dialog.textContent.includes('Bankaing'), 'Navigated back to Project 03 (Bankaing)')
 
   dialog.querySelector('.dialog-close').click()
   await nextTick()
