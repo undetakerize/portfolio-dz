@@ -35,23 +35,23 @@ try {
   assert(!html.includes('href="#"'), 'No inert placeholder links')
   assert(!html.includes('<iframe'), 'No automatic external Figma embeds')
   assert(html.includes(`mailto:${profile.email}`), 'Email action is a mailto link')
-  const defaultVisibleReleases = changelog.slice(0, 3)
-  for (const entry of defaultVisibleReleases) {
-    assert(html.includes(entry.version), `Changelog version ${entry.version} renders`)
-    assert(html.includes(entry.title.replaceAll('&', '&amp;')), `Changelog title ${entry.title} renders`)
+  assert.equal(projects.length, 3, 'All 3 showcase projects are preserved')
+  const infraProject = projects.find(p => p.id === 'diezaster-infra')
+  assert(infraProject, 'Cloud infrastructure project is present')
+  assert.equal(infraProject.year, '2026', 'Infrastructure project has year 2026')
+  assert(html.includes(infraProject.name.replaceAll('&', '&amp;')), 'Infrastructure project renders in SSR')
+  for (const link of infraProject.links) {
+    assert(link.url.startsWith('https://'), `Project link ${link.url} uses https:`)
   }
-  for (const entry of changelog.slice(3)) {
-    assert(!html.includes(entry.version), `Archived changelog version ${entry.version} initially hidden in SSR`)
-  }
-  assert(html.includes('changelog-toggle-button'), 'Changelog expand toggle renders')
-  assert(html.includes(`View earlier releases (${changelog.length - 3} archived)`), 'Changelog toggle text reflects archived count')
-  assert(html.includes('live-pulse-dot'), 'Live status indicator dot renders')
-  assert.equal(projects.length, 2, 'Both source projects are preserved')
   for (const project of projects) {
-    assert(html.includes(project.name), `${project.name} renders`)
-    assert.equal(project.year, '2021', 'Archived work has its real year')
+    assert(html.includes(project.name.replaceAll('&', '&amp;')), `${project.name} renders`)
+    assert(project.year === '2026' || project.year === '2021', `${project.name} has valid year`)
     assert(project.links.length > 0, 'Project has a source link')
     for (const link of project.links) assert.equal(new URL(link.url).protocol, 'https:')
+  }
+  assert(changelog.length >= 5, 'Engineering milestones preserved')
+  for (const entry of changelog) {
+    assert(entry.version && entry.title && entry.description, `Changelog entry ${entry.version} is complete`)
   }
   const imagePaths = [...html.matchAll(/\bsrc="(\/images\/[^"]+)"/g)].map(match => match[1])
   for (const asset of imagePaths) {

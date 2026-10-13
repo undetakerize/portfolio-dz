@@ -5,7 +5,7 @@ import ActionIcon from './ActionIcon.vue'
 
 <template>
   <section id="experience" class="experience-section section shell" aria-labelledby="experience-heading">
-    <div class="section-topline"><p class="eyebrow">01 / PROFESSIONAL EXPERIENCE</p><span class="eyebrow muted">BANDUNG, INDONESIA</span></div>
+    <div class="section-topline"><p class="eyebrow">01 / EXPERIENCE</p><span class="eyebrow muted">BANDUNG, INDONESIA</span></div>
     <div class="section-heading-row" data-reveal>
       <h2 id="experience-heading">Behind the API.<br />Inside the business.</h2>
       <p>Building and maintaining the services behind enterprise operations and financial workflows.</p>

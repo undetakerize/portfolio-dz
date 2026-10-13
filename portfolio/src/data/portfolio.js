@@ -77,8 +77,26 @@ export const tools = [
 
 export const projects = [
   {
-    id: 'bankaing',
+    id: 'diezaster-infra',
     number: '01',
+    name: 'Cloud Infrastructure & Backend Playground',
+    category: 'Backend & DevOps',
+    year: '2026',
+    image: '/images/diezaster-infra.webp',
+    alt: 'System architecture diagram and production container playground on a Linux VPS',
+    summary: 'A self-hosted production backend and containerized cloud architecture on an Ubuntu VPS, engineered under a strict 2GB RAM budget.',
+    tags: ['Java 17', 'Spring Boot 3', 'PostgreSQL 16', 'Docker Compose', 'Nginx Reverse Proxy', 'CQRS'],
+    role: 'Backend engineering & DevOps',
+    description: 'Production architecture powering this portfolio and backend services. Designed to prove pragmatic backend engineering on resource-constrained cloud infrastructure (2GB RAM). Features Spring Boot 3 implementing Pragmatic CQRS (command validation, XSS sanitization, SHA-256 IP hashing), HikariCP pool tuning (max 5 connections), and PostgreSQL 16 Alpine containerization with hard memory caps (total 640MB budget leaving >1.2GB system headroom). Deployed via atomic zero-downtime symlink switches and TLS automated renewal.',
+    outcome: 'A live, resilient, low-memory production environment running on adihadiansyah.site. Restored from zero with Docker multi-stage builds and fully isolated database networks.',
+    links: [
+      { label: 'View live contact API', url: 'https://adihadiansyah.site/api/v1/contact/recent' },
+      { label: 'GitHub repository & architecture', url: 'https://github.com/undetakerize/portfolio-dz' },
+    ],
+  },
+  {
+    id: 'bankaing',
+    number: '02',
     name: 'Bankaing',
     category: 'Web development',
     year: '2021',
@@ -96,7 +114,7 @@ export const projects = [
   },
   {
     id: 'atarashii-gakko',
-    number: '02',
+    number: '03',
     name: 'Atarashii Gakko!',
     category: 'UI design',
     year: '2021',
