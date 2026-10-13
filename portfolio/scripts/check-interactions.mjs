@@ -61,6 +61,7 @@ try {
 
   const filters = [...document.querySelectorAll('.work-filters button')]
   assert.equal(document.querySelectorAll('.project').length, 4, 'All 4 projects visible initially')
+  assert.equal(document.querySelector('.work-load-more-container'), null, 'Load more button not rendered when projects <= 6')
 
   const backendFilter = filters.find(button => button.textContent === 'Backend & DevOps')
   assert(backendFilter, 'Backend & DevOps filter exists')
@@ -153,6 +154,77 @@ try {
   console.log('DOM simulation only: native dialog keyboard behaviour and responsive screenshots still require a browser.')
 } finally {
   app.unmount()
+}
+
+try {
+  const workResult = await build({
+    root,
+    logLevel: 'error',
+    build: {
+      write: false,
+      minify: false,
+      lib: { entry: `${root}/src/components/SelectedWork.vue`, formats: ['es'], fileName: 'work-check' },
+      rollupOptions: { external: ['vue'] },
+    },
+  })
+  const workOutput = (Array.isArray(workResult) ? workResult : [workResult]).flatMap(b => b.output)
+  const workCode = workOutput.find(item => item.type === 'chunk' && item.isEntry).code
+  const { default: SelectedWork } = await import(`data:text/javascript;base64,${Buffer.from(workCode.replaceAll('from "vue"', `from ${JSON.stringify(vueUrl)}`)).toString('base64')}`)
+
+  const mockProjects = Array.from({ length: 8 }, (_, i) => ({
+    id: `project-${i + 1}`,
+    number: `0${i + 1}`,
+    name: `Project ${i + 1}`,
+    category: i % 2 === 0 ? 'Backend & DevOps' : 'UI design',
+    year: '2026',
+    image: '/images/diezaster-infra.webp',
+    alt: `Project ${i + 1}`,
+    summary: `Summary ${i + 1}`,
+    tags: ['Java'],
+    links: [{ label: 'Source', url: 'https://example.com' }],
+  }))
+
+  const workMount = document.createElement('div')
+  document.body.append(workMount)
+  const workApp = createApp(SelectedWork, { projects: mockProjects })
+  workApp.mount(workMount)
+  await nextTick()
+
+  assert.equal(workMount.querySelectorAll('.project').length, 6, 'First 6 projects shown initially when filteredProjects > 6')
+  const loadMoreBtn = workMount.querySelector('.work-load-more-btn')
+  assert(loadMoreBtn, 'Toggle button rendered when filteredProjects > 6')
+  assert.equal(loadMoreBtn.textContent.trim(), 'SHOW ALL PROJECTS (+2) ↓', 'Collapsed label includes remaining count')
+
+  loadMoreBtn.click()
+  await nextTick()
+  assert.equal(workMount.querySelectorAll('.project').length, 8, 'All projects shown when expanded')
+  assert.equal(loadMoreBtn.textContent.trim(), 'SHOW FEWER PROJECTS ↑', 'Expanded label shows fewer')
+
+  const workCategoryBtns = [...workMount.querySelectorAll('.work-filters button')]
+  const devopsBtn = workCategoryBtns.find(b => b.textContent === 'Backend & DevOps')
+  devopsBtn.click()
+  await nextTick()
+  assert.equal(workMount.querySelectorAll('.project').length, 4, 'Filtered items shown when category selected')
+  assert.equal(workMount.querySelector('.work-load-more-container'), null, 'Toggle hidden when filtered category has <= 6 items')
+
+  const allBtn = workCategoryBtns.find(b => b.textContent === 'All work')
+  allBtn.click()
+  await nextTick()
+  assert.equal(workMount.querySelectorAll('.project').length, 6, 'Category change resets isExpanded to false')
+  assert.equal(workMount.querySelector('.work-load-more-btn').textContent.trim(), 'SHOW ALL PROJECTS (+2) ↓')
+
+  workMount.querySelector('.work-load-more-btn').click()
+  await nextTick()
+  assert.equal(workMount.querySelectorAll('.project').length, 8)
+  workMount.querySelector('.work-load-more-btn').click()
+  await nextTick()
+  assert.equal(workMount.querySelectorAll('.project').length, 6)
+
+  workApp.unmount()
+  workMount.remove()
+  console.log('PASS: SelectedWork pagination mitigation (default 6, expand/collapse toggle, category reset).')
+} catch (err) {
+  throw err
 }
 
 try {

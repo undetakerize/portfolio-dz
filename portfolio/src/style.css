@@ -30,6 +30,9 @@
     --pill-radius: 9999px;
     --font: 'Geist Variable', sans-serif;
     --mono: 'Geist Mono Variable', monospace;
+    --font-mono: var(--mono);
+    --line: var(--rule);
+    --panel: var(--soft);
     color-scheme: light;
   }
   :root[data-theme='dark'] {
@@ -311,6 +314,29 @@
   .work-filters button[aria-pressed='true'] { background: var(--ink); color: var(--paper); }
   .work-count { margin-left: auto; font-size: .6rem; color: var(--muted); }
   .project-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; }
+  .work-load-more-container { display: flex; justify-content: center; margin-top: 32px; }
+  .work-load-more-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: .75rem;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    line-height: 1.4;
+    padding: 10px 22px;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color .2s ease, border-color .2s ease, color .2s ease;
+  }
+  .work-load-more-btn:hover {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+  }
   .project { min-width: 0; }
   .event-card { display: flex; flex-direction: column; background: var(--paper); border: 1px solid var(--rule); border-radius: 8px; overflow: hidden; transition: transform .25s cubic-bezier(.2,.7,.2,1), border-color .25s, box-shadow .25s; }
   .event-card:hover { transform: translateY(-3px); border-color: var(--strong-rule); box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06); }

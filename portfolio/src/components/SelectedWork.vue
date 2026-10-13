@@ -1,5 +1,5 @@
 <script setup>
-import { computed, nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { projects } from '../data/portfolio.js'
 import { changelog } from '../data/changelog.js'
 import ActionIcon from './ActionIcon.vue'
@@ -68,10 +68,28 @@ async function fetchTelemetry() {
   }
 }
 
-const filteredProjects = computed(() =>
-  category.value === 'All work'
-    ? projects
-    : projects.filter(project => project.category === category.value)
+const props = defineProps({
+  projects: {
+    type: Array,
+    default: () => projects,
+  },
+})
+
+const isExpanded = ref(false)
+
+watch(category, () => {
+  isExpanded.value = false
+})
+
+const filteredProjects = computed(() => {
+  const source = props.projects || projects
+  return category.value === 'All work'
+    ? source
+    : source.filter(project => project.category === category.value)
+})
+
+const displayedProjects = computed(() =>
+  isExpanded.value ? filteredProjects.value : filteredProjects.value.slice(0, 6)
 )
 
 const selected = ref(null)
@@ -181,7 +199,7 @@ onBeforeUnmount(() => {
 
     <div class="project-grid event-grid">
       <article
-        v-for="(project, index) in filteredProjects"
+        v-for="(project, index) in displayedProjects"
         :key="project.id"
         class="project event-card"
         :class="{ 'project-live': project.id === 'diezaster-infra' }"
@@ -221,6 +239,16 @@ onBeforeUnmount(() => {
           </ul>
         </div>
       </article>
+    </div>
+
+    <div v-if="filteredProjects.length > 6" class="work-load-more-container">
+      <button
+        type="button"
+        class="work-load-more-btn"
+        @click="isExpanded = !isExpanded"
+      >
+        {{ isExpanded ? 'SHOW FEWER PROJECTS ↑' : `SHOW ALL PROJECTS (+${filteredProjects.length - 6}) ↓` }}
+      </button>
     </div>
 
     <dialog ref="dialog" class="project-dialog steam-news-modal" aria-labelledby="project-dialog-title" @close="restoreFocus" @click="closeOnBackdrop">
