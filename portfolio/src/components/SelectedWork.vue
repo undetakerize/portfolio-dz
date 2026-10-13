@@ -189,7 +189,16 @@ onBeforeUnmount(() => {
       >
         <button class="project-image-button event-banner-button" type="button" :aria-label="`Read about ${project.name}`" @click="showProject(project, $event)">
           <div class="event-banner-media">
-            <img :src="project.image" :alt="project.alt" width="1200" height="675" loading="lazy" />
+            <template v-if="project.banner?.type === 'editorial-title'">
+              <div class="banner-editorial-container">
+                <div class="banner-editorial-border" aria-hidden="true"></div>
+                <div class="banner-editorial-content">
+                  <p class="banner-editorial-line">{{ project.banner.line1 }}</p>
+                  <p class="banner-editorial-line">{{ project.banner.line2 }}<span class="banner-ochre-dot">.</span></p>
+                </div>
+              </div>
+            </template>
+            <img v-else :src="project.image" :alt="project.alt" width="1200" height="675" loading="lazy" />
             <div class="event-overlay-badges">
               <span v-if="project.badge" class="pill-badge pill-badge-muted">
                 {{ project.badge }}

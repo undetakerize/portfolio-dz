@@ -82,6 +82,11 @@ export const projects = [
     category: 'Backend & DevOps',
     year: '2026',
     image: '/images/diezaster-infra.webp',
+    banner: {
+      type: 'editorial-title',
+      line1: 'Cloud Infra &',
+      line2: 'Backend Playground',
+    },
     alt: 'System architecture diagram and production container playground on a Linux VPS',
     summary: 'Fun Fact: Yes, this entire portfolio is self-hosted. Running Java 17 Spring Boot 3 & PostgreSQL 16 on a resource-constrained 2GB VPS.',
     tags: ['Java 17', 'Spring Boot 3', 'PostgreSQL 16', 'Docker Compose', 'Nginx Reverse Proxy', 'CQRS'],
@@ -103,6 +108,11 @@ export const projects = [
     category: 'Backend & DevOps',
     year: '2026',
     image: '/images/financial-ledger.webp',
+    banner: {
+      type: 'editorial-title',
+      line1: 'Financial Ledger &',
+      line2: 'Transaction Engine',
+    },
     alt: 'High-Throughput Financial Ledger system architecture and transaction engine specification',
     summary: 'A resilient, concurrent double-entry accounting engine handling zero balance leakage, deterministic lock ordering, and Kafka event streaming.',
     tags: ['Java 17', 'Spring Boot 3', 'PostgreSQL 16', 'Apache Kafka', 'Double-Entry', 'ACID'],
