@@ -88,7 +88,7 @@ export const projects = [
     role: 'Backend engineering & DevOps',
     eventCategory: 'UPDATE / MILESTONE',
     eventDate: 'OCT 2026',
-    stamp: 'BEHIND THIS SITE',
+    stamp: 'SYSTEM ARCHITECTURE',
     badge: 'UPDATE · OCT 2026',
     description: 'Production architecture powering this portfolio and backend services. Designed to prove pragmatic backend engineering on resource-constrained cloud infrastructure (2GB RAM). Features Spring Boot 3 implementing Pragmatic CQRS (command validation, XSS sanitization, SHA-256 IP hashing), HikariCP pool tuning (max 5 connections), and PostgreSQL 16 Alpine containerization with hard memory caps (total 640MB budget leaving >1.2GB system headroom). Deployed via atomic zero-downtime symlink switches and TLS automated renewal.',
     outcome: 'A live, resilient, low-memory production environment running on adihadiansyah.site. Restored from zero with Docker multi-stage builds and fully isolated database networks.',
@@ -99,7 +99,7 @@ export const projects = [
   {
     id: 'financial-ledger-engine',
     number: '02',
-    name: 'High-Throughput Financial Ledger & Event-Driven Engine',
+    name: 'Financial Ledger & Transaction Engine',
     category: 'Backend & DevOps',
     year: '2026',
     image: '/images/financial-ledger.webp',
@@ -109,8 +109,8 @@ export const projects = [
     role: 'Backend Engineering & Architecture',
     eventCategory: 'ENGINEERING SPEC / REPO',
     eventDate: 'OCT 2026',
-    stamp: 'ARCHITECTURE DEEP-DIVE',
-    badge: 'NEW SPEC · OCT 2026',
+    stamp: 'EVENT-DRIVEN SPEC',
+    badge: 'SPEC · OCT 2026',
     description: 'Mission-critical financial ledger architecture engineered to guarantee mathematical consistency and zero double-spending under high transfer contention. Built with Spring Boot 3, PostgreSQL 16, and Kafka/Redpanda. Enforces strict double-entry bookkeeping (sum of debits equals sum of credits invariant), deterministic row-level lock ordering (min/max account IDs via SELECT ... FOR UPDATE) to eliminate deadlocks, and the Transactional Outbox Pattern with SKIP LOCKED worker polling for reliable at-least-once event streaming. Features database-backed idempotency protection against network retries and a comprehensive multi-threaded concurrency test suite.',
     outcome: 'Complete architectural specification, ACID data models, and enterprise Java implementation designed for high-concurrency fintech workloads. Directly linked to dedicated deep-dive repository.',
     links: [
