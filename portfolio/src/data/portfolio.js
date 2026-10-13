@@ -94,7 +94,6 @@ export const projects = [
     description: 'Production architecture powering this portfolio and backend services. Designed to prove pragmatic backend engineering on resource-constrained cloud infrastructure (2GB RAM). Features Spring Boot 3 implementing Pragmatic CQRS (command validation, XSS sanitization, SHA-256 IP hashing), HikariCP pool tuning (max 5 connections), and PostgreSQL 16 Alpine containerization with hard memory caps (total 640MB budget leaving >1.2GB system headroom). Deployed via atomic zero-downtime symlink switches and TLS automated renewal.',
     outcome: 'A live, resilient, low-memory production environment running on adihadiansyah.site. Restored from zero with Docker multi-stage builds and fully isolated database networks.',
     links: [
-      { label: 'View live contact API', url: 'https://adihadiansyah.site/api/v1/contact/recent' },
       { label: 'GitHub repository & architecture', url: 'https://github.com/undetakerize/portfolio-dz' },
     ],
   },
