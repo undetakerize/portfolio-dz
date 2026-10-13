@@ -9,14 +9,22 @@ const category = ref('All work')
 
 const telemetryData = ref(null)
 const telemetryLoading = ref(false)
+const telemetryCooldown = ref(0)
+let cooldownTimer = null
 
 async function fetchTelemetry() {
+  if (telemetryLoading.value || telemetryCooldown.value > 0) return
   telemetryLoading.value = true
   try {
     const res = await fetch('/api/v1/system/telemetry')
     if (res.ok) {
       const json = await res.json()
       telemetryData.value = json.data
+    } else if (res.status === 429) {
+      telemetryData.value = {
+        error: 'HTTP 429 Too Many Requests',
+        message: 'Rate limit exceeded. System is protected by Nginx token-bucket rate limiter.',
+      }
     } else {
       telemetryData.value = { error: `HTTP ${res.status}: Failed to reach backend service.` }
     }
@@ -49,6 +57,14 @@ async function fetchTelemetry() {
     }
   } finally {
     telemetryLoading.value = false
+    telemetryCooldown.value = 5
+    clearInterval(cooldownTimer)
+    cooldownTimer = setInterval(() => {
+      telemetryCooldown.value -= 1
+      if (telemetryCooldown.value <= 0) {
+        clearInterval(cooldownTimer)
+      }
+    }, 1000)
   }
 }
 
@@ -291,10 +307,10 @@ onBeforeUnmount(() => {
               <button
                 type="button"
                 class="sandbox-refresh-btn mono"
-                :disabled="telemetryLoading"
+                :disabled="telemetryLoading || telemetryCooldown > 0"
                 @click="fetchTelemetry"
               >
-                {{ telemetryLoading ? 'FETCHING...' : 'RUN QUERY [GET /api/v1/system/telemetry]' }}
+                {{ telemetryLoading ? 'FETCHING...' : telemetryCooldown > 0 ? `COOLDOWN (${telemetryCooldown}s)` : 'RUN QUERY [GET /api/v1/system/telemetry]' }}
               </button>
             </div>
             <p class="sandbox-caption">
