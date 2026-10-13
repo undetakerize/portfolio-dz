@@ -47,8 +47,8 @@ public class SystemInfoController {
 
         // Database status check
         Map<String, Object> database = new LinkedHashMap<>();
-        try {
-            boolean isValid = dataSource.getConnection().isValid(2);
+        try (java.sql.Connection conn = dataSource.getConnection()) {
+            boolean isValid = conn.isValid(2);
             database.put("engine", "PostgreSQL 16 Alpine");
             database.put("status", isValid ? "CONNECTED" : "DEGRADED");
             database.put("pool", "HikariCP (max-pool-size: 5)");
