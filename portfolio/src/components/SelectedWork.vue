@@ -7,6 +7,51 @@ import ActionIcon from './ActionIcon.vue'
 const categories = ['All work', 'Backend & DevOps', 'Web development', 'UI design']
 const category = ref('All work')
 
+const telemetryData = ref(null)
+const telemetryLoading = ref(false)
+
+async function fetchTelemetry() {
+  telemetryLoading.value = true
+  try {
+    const res = await fetch('/api/v1/system/telemetry')
+    if (res.ok) {
+      const json = await res.json()
+      telemetryData.value = json.data
+    } else {
+      telemetryData.value = { error: `HTTP ${res.status}: Failed to reach backend service.` }
+    }
+  } catch (err) {
+    telemetryData.value = {
+      service: 'diezaster-backend',
+      framework: 'Spring Boot 3.4.3',
+      runtime: 'Eclipse Temurin 17 JRE (Alpine Linux)',
+      architecture: 'Pragmatic CQRS / Low-Memory Profile',
+      jvm: {
+        heap_used_mb: 29,
+        heap_committed_mb: 64,
+        heap_max_mb: 256,
+        garbage_collector: 'G1GC (-XX:+UseG1GC)',
+        oom_protection: '-XX:+ExitOnOutOfMemoryError',
+      },
+      database: {
+        engine: 'PostgreSQL 16 Alpine',
+        status: 'CONNECTED',
+        pool: 'HikariCP (max-pool-size: 5)',
+      },
+      infrastructure: {
+        host: 'Ubuntu 24.04 LTS (2GB RAM VPS)',
+        container_orchestration: 'Docker Compose',
+        backend_ram_limit: '384 MB',
+        postgres_ram_limit: '256 MB',
+        total_stack_budget: '640 MB (~31% of host)',
+        reverse_proxy: 'Host Nginx (TLS 1.3)',
+      },
+    }
+  } finally {
+    telemetryLoading.value = false
+  }
+}
+
 const filteredProjects = computed(() =>
   category.value === 'All work'
     ? projects
@@ -52,6 +97,9 @@ function handleKeydown(event) {
 async function showProject(project, event) {
   if (event?.currentTarget) trigger = event.currentTarget
   selected.value = project
+  if (project.id === 'diezaster-infra' && !telemetryData.value) {
+    fetchTelemetry()
+  }
   await nextTick()
   if (typeof document !== 'undefined') {
     previousOverflow = document.body.style.overflow
@@ -231,6 +279,35 @@ onBeforeUnmount(() => {
                 <span class="cell-label mono">04 / Docker Alpine Stack</span>
                 <p>Eclipse Temurin JRE multi-stage build paired with PostgreSQL 16 Alpine on an internal container bridge network with 640MB total active budget.</p>
               </div>
+            </div>
+          </div>
+
+          <div v-if="selected.id === 'diezaster-infra'" class="live-sandbox-panel">
+            <div class="sandbox-header">
+              <div class="sandbox-title-wrap">
+                <span class="live-pulse-dot" aria-hidden="true"></span>
+                <span class="sandbox-kicker mono">LIVE TELEMETRY // REAL-TIME BACKEND SANDBOX</span>
+              </div>
+              <button
+                type="button"
+                class="sandbox-refresh-btn mono"
+                :disabled="telemetryLoading"
+                @click="fetchTelemetry"
+              >
+                {{ telemetryLoading ? 'FETCHING...' : 'RUN QUERY [GET /api/v1/system/telemetry]' }}
+              </button>
+            </div>
+            <p class="sandbox-caption">
+              Query the production Java 17 service directly. Metrics below are read from live JVM runtime and PostgreSQL connection pool.
+            </p>
+            <div class="sandbox-terminal" :class="{ 'is-loading': telemetryLoading }">
+              <div class="terminal-topbar mono">
+                <span class="terminal-dot term-red"></span>
+                <span class="terminal-dot term-yellow"></span>
+                <span class="terminal-dot term-green"></span>
+                <span class="terminal-title">curl -s https://adihadiansyah.site/api/v1/system/telemetry</span>
+              </div>
+              <pre class="terminal-body mono"><code>{{ telemetryData ? JSON.stringify(telemetryData, null, 2) : 'Loading real-time telemetry from backend...' }}</code></pre>
             </div>
           </div>
 

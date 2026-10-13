@@ -79,6 +79,8 @@ try {
   assert(dialog.textContent.includes('Cloud Infrastructure & Backend Playground'), 'Project title in dialog')
   assert(dialog.textContent.includes('Container Orchestration (M10)'), 'Milestones are embedded in dialog')
   assert(dialog.querySelector('.live-pulse-dot'), 'Live status indicator dot renders in milestone timeline')
+  assert(dialog.textContent.includes('LIVE TELEMETRY // REAL-TIME BACKEND SANDBOX'), 'Live backend sandbox renders in modal')
+  assert(dialog.querySelector('.sandbox-terminal'), 'Sandbox terminal component renders')
   assert.equal(document.body.style.overflow, 'hidden', 'Background scrolling is locked')
   document.querySelector('.dialog-close').click()
   await nextTick()

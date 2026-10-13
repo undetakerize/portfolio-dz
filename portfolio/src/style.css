@@ -298,7 +298,26 @@
   .cell-label { display: block; font-size: .68rem; font-weight: 600; letter-spacing: .03em; margin-bottom: 5px; color: var(--accent); }
   :root[data-theme='dark'] .cell-label { color: var(--ochre); }
   .fun-fact-cell p { font-size: .8rem; line-height: 1.45; margin: 0; opacity: .92; }
-  .news-body-section { margin-top: 20px; }
+  .live-sandbox-panel { margin-top: 32px; border-top: 1px solid var(--rule); padding-top: 28px; }
+  .sandbox-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 8px; }
+  .sandbox-title-wrap { display: flex; align-items: center; gap: 10px; }
+  .sandbox-kicker { font-size: .75rem; font-weight: 600; letter-spacing: .08em; color: var(--accent); }
+  :root[data-theme='dark'] .sandbox-kicker { color: var(--ochre); }
+  .sandbox-refresh-btn { background: var(--button); color: var(--button-text); border: 1px solid transparent; padding: 7px 14px; font-size: .68rem; font-weight: 600; letter-spacing: .04em; transition: background .2s, transform .15s; }
+  .sandbox-refresh-btn:hover:not(:disabled) { background: var(--button-hover); transform: translateY(-1px); }
+  .sandbox-refresh-btn:disabled { opacity: .6; cursor: not-allowed; }
+  .sandbox-caption { font-size: .85rem; color: var(--muted); margin: 0 0 16px; line-height: 1.5; }
+  .sandbox-terminal { background: #161815; color: #eceee6; border: 1px solid var(--rule); border-radius: 6px; overflow: hidden; box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12); }
+  .terminal-topbar { background: #21241f; padding: 10px 14px; display: flex; align-items: center; gap: 8px; font-size: .68rem; border-bottom: 1px solid #2e332a; }
+  .terminal-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+  .term-red { background: #ef4444; }
+  .term-yellow { background: #eab308; }
+  .term-green { background: #22c55e; }
+  .terminal-title { margin-left: 8px; color: #9ca3af; letter-spacing: .02em; word-break: break-all; }
+  .terminal-body { margin: 0; padding: 18px 20px; font-size: .76rem; line-height: 1.55; max-height: 280px; overflow-y: auto; color: #86efac; }
+  .sandbox-terminal.is-loading .terminal-body { opacity: .5; }
+  
+  .news-body-section { margin-top: 24px; }
   .news-body-section > p { color: var(--muted); font-size: .9rem; line-height: 1.65; margin-top: 12px; }
   .news-body-section h3 { margin-top: 24px; font-size: 1rem; font-weight: 600; color: var(--ink); }
   .dialog-links { display: flex; flex-wrap: wrap; gap: 18px 30px; margin-top: 30px; }
