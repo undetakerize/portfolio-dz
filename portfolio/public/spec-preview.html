@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Design Spec Preview — Neo-Brutalist Technical Editorial</title>
+  <style>
+    :root {
+      --bg: #f6f5f0;
+      --surface: #ffffff;
+      --ink: #181a17;
+      --muted: #656b62;
+      --rule: #181a17;
+      --forest: #1f3527;
+      --forest-tint: #eaf1ec;
+      --ochre: #d9931e;
+      --ochre-tint: #fbf3e6;
+      --mono: ui-monospace, 'Geist Mono', SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      --sans: -apple-system, BlinkMacSystemFont, 'Geist', 'Segoe UI', Roboto, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      padding: 40px 24px;
+      line-height: 1.5;
+      background-image: radial-gradient(#d5d7cd 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .header-banner {
+      border: 2px solid var(--rule);
+      background: var(--ochre-tint);
+      padding: 16px 20px;
+      margin-bottom: 36px;
+      box-shadow: 4px 4px 0px var(--rule);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .badge-mono {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      background: var(--ink);
+      color: var(--surface);
+      padding: 4px 8px;
+      display: inline-block;
+    }
+
+    /* SECTION 1: HERO TYPOGRAPHY EXPERIMENT */
+    .hero-spec {
+      margin-bottom: 48px;
+      border-bottom: 2px solid var(--rule);
+      padding-bottom: 40px;
+    }
+    .hero-kicker {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--forest);
+      letter-spacing: 0.1em;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .hero-kicker::before {
+      content: "✦";
+      color: var(--ochre);
+    }
+    .hero-title {
+      font-size: clamp(2.4rem, 6vw, 4.2rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.035em;
+      margin-bottom: 16px;
+    }
+    .hero-title em {
+      font-style: italic;
+      font-weight: 400;
+      color: var(--forest);
+      font-family: Georgia, serif;
+    }
+    .hero-lead {
+      font-size: 1.15rem;
+      color: var(--muted);
+      max-width: 620px;
+      line-height: 1.6;
+    }
+
+    /* SECTION 2: BRUTALIST TECHNICAL CARDS */
+    .section-title {
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .section-title::after {
+      content: "";
+      flex: 1;
+      height: 2px;
+      background: var(--rule);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+      margin-bottom: 48px;
+    }
+
+    /* SPEC CARD A: SOLID OFFSET SHADOW */
+    .spec-card {
+      background: var(--surface);
+      border: 2px solid var(--rule);
+      box-shadow: 5px 5px 0px var(--rule);
+      padding: 24px;
+      position: relative;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .spec-card:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 7px 7px 0px var(--forest);
+    }
+    .corner-cross {
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      font-weight: 900;
+      background: var(--ochre);
+      color: var(--ink);
+      width: 18px;
+      height: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--rule);
+    }
+
+    .card-meta {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--muted);
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .card-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+    }
+    .card-desc {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 18px;
+      line-height: 1.5;
+    }
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .tag-brutal {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      font-weight: 600;
+      border: 1px solid var(--rule);
+      padding: 3px 8px;
+      background: var(--bg);
+    }
+
+    /* SPEC CARD B: TACTICAL / FOLD NOTCH */
+    .spec-card-notch {
+      background: var(--forest-tint);
+      border: 2px solid var(--rule);
+      box-shadow: 5px 5px 0px var(--forest);
+      padding: 24px;
+      position: relative;
+    }
+    .stamp-pinned {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      font-weight: 700;
+      background: var(--forest);
+      color: #fff;
+      padding: 4px 10px;
+      letter-spacing: 0.05em;
+      margin-bottom: 14px;
+    }
+
+    /* COMPARISON SECTION */
+    .compare-box {
+      border: 2px dashed var(--muted);
+      padding: 24px;
+      background: rgba(255, 255, 255, 0.6);
+      margin-top: 36px;
+    }
+    .compare-title {
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .compare-list {
+      padding-left: 20px;
+      font-size: 0.92rem;
+      color: var(--muted);
+    }
+    .compare-list li { margin-bottom: 6px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header-banner">
+      <div>
+        <span class="badge-mono">DESIGN EXPLORATION // SPEC PREVIEW</span>
+        <strong style="margin-left: 8px; font-size: 0.88rem;">Neo-Brutalist Technical Editorial</strong>
+      </div>
+      <span style="font-family: var(--mono); font-size: 0.75rem; color: var(--muted);">Target: adihadiansyah.site</span>
+    </div>
+
+    <!-- 1. HERO EXPERIMENT -->
+    <section class="hero-spec">
+      <div class="hero-kicker">01 // PROPOSED HERO HEADLINE CONTRAST</div>
+      <h1 class="hero-title">
+        Building <em>resilient</em> backend engines & cloud playgrounds.
+      </h1>
+      <p class="hero-lead">
+        Menghadirkan kontras editorial: teks sans-serif bold dipadukan dengan kata kunci <em>italic serif yang anggun</em> (seperti majalah desain teknis modern), membuat hero langsung punya karakter kuat saat pertama dibuka.
+      </p>
+    </section>
+
+    <!-- 2. CARD EXPERIMENTS -->
+    <div class="section-title">02 // TACTILE BRUTALIST CARDS (SOLID SHADOW + HARD EDGES)</div>
+    <div class="grid">
+      <!-- Card A -->
+      <div class="spec-card">
+        <div class="corner-cross">+</div>
+        <div class="card-meta">
+          <span>PTS-2026 // SYSTEM CORE</span>
+          <span>LIVE V2.4</span>
+        </div>
+        <h3 class="card-title">Hard Shadow & Accent Crosshair</h3>
+        <p class="card-desc">
+          Bukan bayangan abu-abu lembut biasa, melainkan <strong>solid 5px hard shadow</strong> dengan border hitam 2px tegas dan pin crosshair <code>+</code> di sudut. Memberikan sentuhan tactile seperti instrumen audio/hardware.
+        </p>
+        <div class="tag-row">
+          <span class="tag-brutal">#Spring-Boot-3</span>
+          <span class="tag-brutal">#PostgreSQL-16</span>
+          <span class="tag-brutal">#G1GC</span>
+        </div>
+      </div>
+
+      <!-- Card B -->
+      <div class="spec-card-notch">
+        <div class="stamp-pinned">FEATURED WORKSHOP</div>
+        <div class="card-meta">
+          <span>SYS_OPS // CONTAINER</span>
+          <span>640MB CAP</span>
+        </div>
+        <h3 class="card-title">Editorial Color-Block Notch</h3>
+        <p class="card-desc">
+          Card dengan latar belakang tone tinted khusus (misal <code>--forest-tint</code> atau <code>--ochre-tint</code>), dipadukan dengan stamp hitam pekat yang melompat di atas border.
+        </p>
+        <div class="tag-row">
+          <span class="tag-brutal">#Alpine-JRE-17</span>
+          <span class="tag-brutal">#Kafka</span>
+          <span class="tag-brutal">#Nginx-Proxy</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. HIGHLIGHT SUMMARY -->
+    <div class="compare-box">
+      <div class="compare-title">📌 APA SAJA YANG MEMBEDAKAN DARI DESAIN "COMMON"?</div>
+      <ul class="compare-list">
+        <li><strong>Zero Blur Shadow:</strong> Bayangan blur <code>rgba(0,0,0,0.08)</code> diganti menjadi <strong>solid offset shadow <code>5px 5px 0px var(--rule)</code></strong>.</li>
+        <li><strong>Typographic Drama:</strong> Nama atau headline utama punya permainan variasi font (sans bold + serif italic) untuk kesan editorial majalah premium.</li>
+        <li><strong>Tactile Micro-Details:</strong> Label section diberi prefix teknis (<code>01 //</code>, <code>[SYS_STATUS]</code>, crosshair <code>+</code> di sudut card).</li>
+        <li><strong>Zero Bundle Impact:</strong> 100% pure CSS native, tanpa library eksternal, tanpa membebani performa VPS 2GB kamu!</li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

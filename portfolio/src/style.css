@@ -142,32 +142,90 @@
   .career-entry-highlight {
   background: var(--ochre-card);
   color: var(--ochre-card-ink);
-  border: 1px solid var(--ochre);
+  border: 2px solid var(--rule);
   border-radius: 0;
-  padding: 24px 28px 28px;
-  margin-block: 12px 20px;
-  box-shadow: none;
+  padding: 0;
+  margin-block: 16px 24px;
+  box-shadow: 6px 6px 0px var(--rule);
   position: relative;
+  overflow: hidden;
+  display: block;
 }
-.career-entry-highlight::after {
-  content: '';
-  position: absolute;
-  top: -1px;
-  right: -1px;
-  width: 14px;
-  height: 14px;
-  background: var(--ochre);
-  clip-path: polygon(100% 0, 0 0, 100% 100%);
-}
+  .career-entry-retro-window .retro-window-header {
+    background: #1f3527;
+    color: #ffffff;
+    padding: 7px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--rule);
+    font-family: var(--mono);
+    font-size: .68rem;
+    font-weight: 700;
+    letter-spacing: .04em;
+  }
+  .retro-window-title { display: flex; align-items: center; gap: 8px; }
+  .retro-win-icon { width: 10px; height: 10px; background: var(--ochre); border: 1px solid #000; display: inline-block; }
+  .retro-window-controls { display: flex; gap: 4px; }
+  .retro-win-btn {
+    width: 17px;
+    height: 17px;
+    background: #ded9c8;
+    color: #181a17;
+    border: 1px solid #181a17;
+    box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #777;
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 900;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0;
+  }
+  .career-entry-retro-window .career-meta {
+    padding: 22px 28px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .career-entry-retro-window .career-content {
+    padding: 12px 28px 24px;
+  }
   .career-entry-highlight .career-company { color: var(--ochre-card-ink); font-weight: 600; margin-top: 4px; }
   .career-entry-highlight .career-summary { color: var(--ochre-card-ink); opacity: .88; margin-top: 10px; font-size: .88rem; line-height: 1.5; }
   .career-entry-highlight .career-highlights { color: var(--ochre-card-ink); opacity: .92; margin: 14px 0 0; padding-left: 16px; font-size: .85rem; }
   .career-entry-highlight .career-highlights li { margin-top: 8px; line-height: 1.5; }
   .career-entry-highlight .career-highlights li::marker { color: var(--accent); }
   .career-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
-  .career-entry-highlight .career-tags { margin-top: 16px; gap: 6px; }
-  .career-entry-highlight .career-tags .pill-badge { background: rgb(255 255 255 / .35); border-color: rgb(0 0 0 / .12); color: var(--ochre-card-ink); padding: 3px 10px; font-size: .65rem; }
-  :root[data-theme='dark'] .career-entry-highlight .career-tags .pill-badge { background: rgb(0 0 0 / .25); border-color: rgb(255 255 255 / .12); color: var(--ochre-card-ink); }
+  .career-entry-highlight .career-tags {
+    margin-top: 20px;
+    gap: 8px;
+    border-top: 1px dashed var(--rule);
+    padding-top: 16px;
+  }
+  .retro-tag-chip {
+    font-family: var(--mono);
+    font-size: .68rem;
+    font-weight: 700;
+    background: #eae5d5;
+    color: #181a17;
+    border: 1px solid var(--rule);
+    box-shadow: 2px 2px 0px var(--rule);
+    padding: 3px 8px;
+    letter-spacing: .02em;
+  }
+  :root[data-theme='dark'] .career-entry-retro-window .retro-window-header {
+    background: #14241a;
+    border-bottom-color: var(--rule);
+  }
+  :root[data-theme='dark'] .retro-tag-chip {
+    background: #2a251b;
+    color: var(--ochre-card-ink);
+    border-color: var(--ochre);
+    box-shadow: 2px 2px 0px #000;
+  }
   .career-sparkle { width: 12px; height: 12px; margin-right: 2px; }
   .career-period { font-size: .75rem; margin-bottom: 12px; }
   .career-content h3 { font-size: 1.65rem; letter-spacing: -.04em; }
@@ -393,6 +451,16 @@
     .main-nav .nav-contact { margin-top: 5px; width: fit-content; }
   }
   @media (max-width: 760px) {
+    .career-entry-highlight { padding: 0; margin-block: 14px 20px; }
+    .career-entry-retro-window .career-meta { padding: 18px 16px 0; }
+    .career-entry-retro-window .career-content { padding: 10px 16px 20px; }
+    .career-entry-retro-window .retro-window-header { font-size: .62rem; padding: 6px 10px; }
+    .career-entry-retro-window .retro-window-title span:last-child {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 210px;
+    }
     html { scroll-padding-top: 24px; }
     .shell { width: calc(100% - 40px); }
     .section { padding-block: 64px; }
