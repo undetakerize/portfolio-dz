@@ -66,7 +66,7 @@ try {
   assert(backendFilter, 'Backend & DevOps filter exists')
   backendFilter.click()
   await nextTick()
-  assert.equal(document.querySelectorAll('.project').length, 1, 'Only Backend project visible')
+  assert.equal(document.querySelectorAll('.project').length, 2, 'Two Backend projects visible (Infra + Ledger)')
   assert(document.querySelector('.project').textContent.includes('Cloud Infrastructure'), 'Diezaster infra shown')
 
   const trigger = document.querySelector('.project-title')
@@ -115,7 +115,7 @@ try {
 
   nextBtn.click()
   await nextTick()
-  assert(dialog.textContent.includes('Bankaing'), 'Navigated to Project 02 (Bankaing)')
+  assert(dialog.textContent.includes('Financial Ledger'), 'Navigated to Project 02 (Financial Ledger)')
   assert(!prevBtn.disabled, 'Previous button enabled at Project 02')
   assert(!nextBtn.disabled, 'Next button enabled at Project 02')
 
@@ -127,7 +127,7 @@ try {
 
   prevBtn.click()
   await nextTick()
-  assert(dialog.textContent.includes('Bankaing'), 'Navigated back to Project 02 (Bankaing)')
+  assert(dialog.textContent.includes('Financial Ledger'), 'Navigated back to Project 02 (Financial Ledger)')
 
   dialog.querySelector('.dialog-close').click()
   await nextTick()
