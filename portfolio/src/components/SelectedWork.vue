@@ -205,7 +205,6 @@ onBeforeUnmount(() => {
               </span>
               <span v-if="project.stamp" class="event-stamp-tag mono">{{ project.stamp }}</span>
             </div>
-            <span class="image-action" aria-hidden="true">View details <ActionIcon name="details" /></span>
           </div>
         </button>
         <div class="event-card-body">
@@ -215,7 +214,6 @@ onBeforeUnmount(() => {
           </div>
           <button class="project-title" type="button" @click="showProject(project, $event)">
             <span>{{ project.name }}</span>
-            <span class="project-detail-label">View details <ActionIcon name="details" /></span>
           </button>
           <p class="project-summary">{{ project.summary }}</p>
           <ul class="project-tags" aria-label="Project technologies">
