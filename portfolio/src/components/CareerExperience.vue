@@ -14,15 +14,15 @@ import ActionIcon from './ActionIcon.vue'
       <article
         v-for="(job, index) in experience"
         :key="job.company"
-        class="career-entry"
-        :class="{ 'career-entry-highlight': index === 0, 'career-entry-secondary': index > 0, 'career-entry-retro-window': index === 0 }"
+        class="career-entry career-entry-retro-window"
+        :class="{ 'career-entry-highlight': index === 0, 'career-entry-secondary-window': index > 0 }"
         data-reveal
       >
-        <!-- RETRO OS WINDOW HEADER FOR PRIMARY ROLE (BTS.ID) -->
-        <div v-if="index === 0" class="retro-window-header" aria-hidden="true">
+        <!-- RETRO OS WINDOW HEADER -->
+        <div class="retro-window-header" :class="{ 'header-secondary': index > 0 }" aria-hidden="true">
           <div class="retro-window-title">
-            <span class="retro-win-icon"></span>
-            <span>C:\CAREER\BTS_ID\BACKEND_SERVICES.LOG</span>
+            <span class="retro-win-icon" :class="{ 'icon-secondary': index > 0 }"></span>
+            <span>{{ index === 0 ? 'C:\\CAREER\\BTS_ID\\BACKEND_SERVICES.LOG' : 'C:\\CAREER\\AMORE\\UIUX_FOUNDATION.LOG' }}</span>
           </div>
           <div class="retro-window-controls">
             <button class="retro-win-btn" type="button" aria-label="Minimize window">_</button>
@@ -48,7 +48,7 @@ import ActionIcon from './ActionIcon.vue'
             <li v-for="highlight in job.highlights" :key="highlight">{{ highlight }}</li>
           </ul>
           <div v-if="job.tags" class="career-tags">
-            <span v-for="tag in job.tags" :key="tag" :class="index === 0 ? 'retro-tag-chip' : 'pill-badge pill-badge-muted'">{{ tag }}</span>
+            <span v-for="tag in job.tags" :key="tag" class="retro-tag-chip" :class="{ 'tag-secondary': index > 0 }">{{ tag }}</span>
           </div>
         </div>
       </article>

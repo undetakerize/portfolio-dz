@@ -151,6 +151,18 @@
   overflow: hidden;
   display: block;
 }
+  .career-entry-secondary-window {
+    background: var(--soft);
+    color: var(--ink);
+    border: 2px solid var(--rule);
+    border-radius: 0;
+    padding: 0;
+    margin-block: 16px 24px;
+    box-shadow: 4px 4px 0px var(--rule);
+    position: relative;
+    overflow: hidden;
+    display: block;
+  }
   .career-entry-retro-window .retro-window-header {
     background: #1f3527;
     color: #ffffff;
@@ -164,8 +176,13 @@
     font-weight: 700;
     letter-spacing: .04em;
   }
+  .career-entry-retro-window .retro-window-header.header-secondary {
+    background: #2a3129;
+    border-bottom: 2px solid var(--rule);
+  }
   .retro-window-title { display: flex; align-items: center; gap: 8px; }
   .retro-win-icon { width: 10px; height: 10px; background: var(--ochre); border: 1px solid #000; display: inline-block; }
+  .retro-win-icon.icon-secondary { background: var(--muted); }
   .retro-window-controls { display: flex; gap: 4px; }
   .retro-win-btn {
     width: 17px;
@@ -199,7 +216,7 @@
   .career-entry-highlight .career-highlights li { margin-top: 8px; line-height: 1.5; }
   .career-entry-highlight .career-highlights li::marker { color: var(--accent); }
   .career-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
-  .career-entry-highlight .career-tags {
+  .career-entry-retro-window .career-tags {
     margin-top: 20px;
     gap: 8px;
     border-top: 1px dashed var(--rule);
@@ -216,15 +233,27 @@
     padding: 3px 8px;
     letter-spacing: .02em;
   }
+  .retro-tag-chip.tag-secondary {
+    background: var(--paper);
+    color: var(--ink);
+  }
   :root[data-theme='dark'] .career-entry-retro-window .retro-window-header {
     background: #14241a;
     border-bottom-color: var(--rule);
+  }
+  :root[data-theme='dark'] .career-entry-retro-window .retro-window-header.header-secondary {
+    background: #1a1e1b;
   }
   :root[data-theme='dark'] .retro-tag-chip {
     background: #2a251b;
     color: var(--ochre-card-ink);
     border-color: var(--ochre);
     box-shadow: 2px 2px 0px #000;
+  }
+  :root[data-theme='dark'] .retro-tag-chip.tag-secondary {
+    background: #1c1f1d;
+    color: var(--ink);
+    border-color: var(--rule);
   }
   .career-sparkle { width: 12px; height: 12px; margin-right: 2px; }
   .career-period { font-size: .75rem; margin-bottom: 12px; }
@@ -451,7 +480,7 @@
     .main-nav .nav-contact { margin-top: 5px; width: fit-content; }
   }
   @media (max-width: 760px) {
-    .career-entry-highlight { padding: 0; margin-block: 14px 20px; }
+    .career-entry-highlight, .career-entry-secondary-window { padding: 0; margin-block: 14px 20px; }
     .career-entry-retro-window .career-meta { padding: 18px 16px 0; }
     .career-entry-retro-window .career-content { padding: 10px 16px 20px; }
     .career-entry-retro-window .retro-window-header { font-size: .62rem; padding: 6px 10px; }
