@@ -184,6 +184,7 @@ Frontend bundles are built and released without downtime using symlink switching
 - New versions deploy into a new timestamped directory.
 - `ln -sfn /var/www/diezaster/releases/<new-release> /var/www/diezaster/current` updates the pointer atomically.
 - Nginx immediately serves new assets without reloading or dropped requests.
+- Automated via GitHub Actions CD workflow on push to `main` (see [docs/M8_CD_SETUP.md](docs/M8_CD_SETUP.md)).
 
 ### Backend: Containerized Service
 

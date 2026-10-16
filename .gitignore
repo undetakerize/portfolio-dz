@@ -25,10 +25,10 @@ Thumbs.db
 # Local agents and tooling
 .brain/
 .clinerules/
-.github/
 
 # Internal documentation
-docs/
+docs/*
+!docs/M8_CD_SETUP.md
 AGENTS.md
 portfolio/README.md
 
