@@ -6,6 +6,7 @@ export const profile = {
   location: 'Bandung, Indonesia',
   summary: 'Backend Engineer with 4+ years of experience building and maintaining enterprise applications using Java and Spring Boot. My focus is reliable APIs, efficient data processing, and maintainable services.',
 }
+// Trigger M8 automated CD pipeline verification test
 
 // Career dates and capabilities are sourced from Adi_Hadiansyah.pdf.
 // Do not turn past employment into a current role or invent impact metrics.
